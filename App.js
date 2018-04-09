@@ -1,26 +1,36 @@
-import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { Component } from 'react'
 
-export default class App extends Component {
-  componentWillMount(){
-    console.log("Flashcard App Instantiated")
-  }
+import {
+  Text,
+  View,
+} from 'react-native'
+
+import {
+  blue,
+  white,
+} from './utils/colors'
+
+// NOTE example usage of Dimensions API
+// import { Dimensions } from 'react-native';
+// const { width, height } = Dimensions.get('window');
+
+import CustomStatusBar from './components/CustomStatusBar'
+
+class App extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
+      <View style={{ flex: 1 }}>
+
+        <CustomStatusBar
+          backgroundColor={blue}
+          barStyle="light-content"
+        />
+
+        <Text>Placeholder Text</Text>
+
       </View>
-    );
+    )
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App
