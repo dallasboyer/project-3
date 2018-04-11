@@ -27,6 +27,13 @@ class DeckList extends Component {
           }
         ]
       },
+      Geography: {
+        title: 'Geography',
+      },
+      Farming: {
+        title: 'Farming',
+        cards: []
+      },
       JavaScript: {
         title: 'JavaScript',
         cards: [
@@ -85,12 +92,12 @@ class DeckList extends Component {
           renderItem={({ item }) => (
             <TouchableOpacity onPress={() => this.props.navigation.navigate('Deck', {deck: item})}>
               <View style={styles.deckHeader} key={item.title}>
-                  <Text>
-                    {`${item.title}`}
-                  </Text>
-                  <Text>
-                    {`${item.cards.length} cards`}
-                  </Text>
+                <Text style={styles.title}>
+                  {`${item.title}`}
+                </Text>
+                <Text style={styles.cardCount}>
+                  {item.cards ? `${item.cards.length} cards` : `No cards available`}
+                </Text>
               </View>
             </TouchableOpacity>
           )}
@@ -124,6 +131,12 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderColor: 'black',
   },
+  title: {
+    fontSize: 20,
+  },
+  cardCount: {
+    color: 'red',
+  }
 })
 
 export default DeckList
