@@ -8,10 +8,12 @@ import {
   TouchableOpacity
 } from 'react-native'
 
+import sortBy from 'sort-by'
+
 class DeckList extends Component {
   render() {
 
-    let testObject = {
+    let test_decks = {
       React: {
         title: 'React',
         cards: [
@@ -49,15 +51,15 @@ class DeckList extends Component {
       },
     }
 
-    console.log("Test Object: ", Object.values(testObject))
-
+    const decksInAlphabeticalOrder = Object.values(test_decks).sort(sortBy("title"))
+    console.log("Decks in alphabetical order: ", decksInAlphabeticalOrder)
 
     return (
       <View style={styles.container}>
         <Text style={styles.pageTitle}>DeckList.js</Text>
 
         <FlatList
-          data={Object.values(testObject)}
+          data={Object.values(test_decks)}
           renderItem={({ item }) => (
             <View style={styles.deckHeader} key={item.title}>
               <TouchableOpacity onPress={() => this.props.navigation.navigate('Deck', {deck: item})}>
