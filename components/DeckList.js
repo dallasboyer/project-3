@@ -96,7 +96,7 @@ class DeckList extends Component {
                   {`${item.title}`}
                 </Text>
                 <Text style={styles.cardCount}>
-                  {item.cards ? `${item.cards.length} cards` : `No cards available`}
+                  {item.cards && item.cards.length ? `${item.cards.length} cards` : `No cards available`}
                 </Text>
               </View>
             </TouchableOpacity>
