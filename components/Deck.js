@@ -32,15 +32,20 @@ class Deck extends Component {
           onPress={() => this.props.navigation.navigate('NewCard', { deck: this.props.navigation.state.params.deck })}
           title="Add Card"
           // color="#841584"
-          accessibilityLabel="Learn more about this purple button"
+          accessibilityLabel="Add a new card to this deck"
         />
 
-        <Button
-          onPress={() => this.props.navigation.navigate('Quiz', { deck: this.props.navigation.state.params.deck })}
-          title="Start Quiz"
-          color="#841584"
-          accessibilityLabel="Learn more about this purple button"
-        />
+        {this.props.navigation.state.params.deck.cards && this.props.navigation.state.params.deck.cards.length
+          ? 
+            (<Button
+              onPress={() => this.props.navigation.navigate('Quiz', { deck: this.props.navigation.state.params.deck })}
+              title="Start Quiz"
+              color="#841584"
+              accessibilityLabel="Start quizing yourself on this deck"
+            />)
+          :
+            (null)  
+        }
 
         <Text>
           {JSON.stringify(this.props.navigation.state.params.deck)}
