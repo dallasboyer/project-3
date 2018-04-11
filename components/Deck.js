@@ -7,10 +7,21 @@ import {
 } from 'react-native'
 
 class Deck extends Component {
+  static navigationOptions = ({ navigation }) => {
+    const { deck } = navigation.state.params
+    return {
+      title: `${deck.title} Deck`
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.pageTitle}>Deck.js</Text>
+        <Text style={styles.pageTitle}>Deck.js {`ID: ${this.props.navigation.state.params.deck.title}`}</Text>
+
+        <Text>
+          {JSON.stringify(this.props.navigation.state.params.deck)}
+        </Text>
       </View>
     )
   }
