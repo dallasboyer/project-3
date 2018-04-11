@@ -49,6 +49,28 @@ class DeckList extends Component {
           }
         ]
       },
+      Tools: {
+        title: 'Tools',
+        cards: [
+          {
+            question: 'What is the most essential tool',
+            answer: 'axe'
+          },
+        ]
+      },
+      Vocabulary: {
+        title: 'Vocabulary',
+        cards: [
+          {
+            question: 'abhorrent',
+            answer: 'utterly opposed, or contrary, or in conflict (usually followed by to)'
+          },
+          {
+            question: 'magnanimous',
+            answer: 'generous in forgiving an insult or injury; free from petty resentfulness or vindictiveness'
+          },
+        ]
+      },
     }
 
     const decksInAlphabeticalOrder = Object.values(test_decks).sort(sortBy("title"))
@@ -56,21 +78,21 @@ class DeckList extends Component {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.pageTitle}>DeckList.js</Text>
+        <Text style={styles.pageTitle}>All Decks</Text>
 
         <FlatList
           data={Object.values(test_decks)}
           renderItem={({ item }) => (
-            <View style={styles.deckHeader} key={item.title}>
-              <TouchableOpacity onPress={() => this.props.navigation.navigate('Deck', {deck: item})}>
-                <Text>
-                  {`Title: ${item.title}`}
-                </Text>
-                <Text>
-                  {`${item.cards.length} cards`}
-                </Text>
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('Deck', {deck: item})}>
+              <View style={styles.deckHeader} key={item.title}>
+                  <Text>
+                    {`${item.title}`}
+                  </Text>
+                  <Text>
+                    {`${item.cards.length} cards`}
+                  </Text>
+              </View>
+            </TouchableOpacity>
           )}
         />
           
@@ -91,12 +113,16 @@ const styles = StyleSheet.create({
     fontSize: 40,
   },
   deckHeader: {
+    flex: 1,
+    justifyContent: 'space-around',
+    alignItems: 'center',
     backgroundColor: 'lightgray',
-    fontSize: 50,
-    width: '100%',
+    minWidth: '90%',
     height: 100,
     marginTop: 10,
     marginBottom: 10,
+    borderWidth: 3,
+    borderColor: 'black',
   },
 })
 
