@@ -29,7 +29,7 @@ class Deck extends Component {
         </View>
 
         <Button
-          onPress={() => console.log("You added a Card")}
+          onPress={() => this.props.navigation.navigate('NewCard', { deck: this.props.navigation.state.params.deck })}
           title="Add Card"
           // color="#841584"
           accessibilityLabel="Learn more about this purple button"
