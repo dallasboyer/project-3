@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 
+import { Provider } from 'react-redux'
+import store from './store'
+
 import {
   StyleSheet,
   Text,
@@ -104,16 +107,18 @@ const MainNavigator = StackNavigator({
 class App extends Component {
   render() {
     return (
-      <View style={{ flex: 1 }}>
+      <Provider store={store}>
+        <View style={{ flex: 1 }}>
 
-        <CustomStatusBar
-          backgroundColor={blue}
-          barStyle="light-content"
-        />
+          <CustomStatusBar
+            backgroundColor={blue}
+            barStyle="light-content"
+          />
 
-        <MainNavigator />
+          <MainNavigator />
 
-      </View>
+        </View>
+      </Provider>
     )
   }
 }

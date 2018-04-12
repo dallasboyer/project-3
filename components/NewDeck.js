@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import { connect } from 'react-redux'
+
 import {
   StyleSheet,
   Text,
@@ -15,6 +17,10 @@ import {
   blue,
   white,
 } from '../utils/colors'
+
+import {
+  addDeck
+} from '../actions/decks'
 
 const SubmitBtn = ({ onPress }) => {
   return (
@@ -37,8 +43,18 @@ class NewDeck extends Component {
   }
 
   submitDeck = () => {
-    console.log(`Submitted new deck titled: ${this.state.title}`)
+    const {
+      addDeck,
+      navigation
+    } = this.props
+
+    const newDeck = {
+      [this.state.title]: { title: this.state.title }
+    }
+
+    addDeck(newDeck)
     this.setState({ title: '' })
+    navigation.navigate('DeckList')   
   }
 
   render() {
@@ -107,4 +123,9 @@ const styles = StyleSheet.create({
   },
 })
 
-export default NewDeck
+
+const mapDispatchToProps = dispatch => ({
+  addDeck: (deck) => dispatch(addDeck(deck)),
+})
+
+export default connect(null, mapDispatchToProps)(NewDeck)
