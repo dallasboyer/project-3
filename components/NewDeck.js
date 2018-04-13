@@ -10,7 +10,8 @@ import {
   Platform,
   TextInput,
   AsyncStorage,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  Button
 } from 'react-native'
 
 import {
@@ -19,7 +20,7 @@ import {
 } from '../utils/colors'
 
 import {
-  addDeck
+  addDeck,
 } from '../actions/decks'
 
 const SubmitBtn = ({ onPress }) => {
@@ -31,7 +32,7 @@ const SubmitBtn = ({ onPress }) => {
       onPress={onPress}
     >
       <Text style={styles.submitBtnText}>
-        SUBMIT
+        Add Deck
       </Text>
     </TouchableOpacity>
   )
@@ -48,11 +49,7 @@ class NewDeck extends Component {
       navigation
     } = this.props
 
-    const newDeck = {
-      [this.state.title]: { title: this.state.title }
-    }
-
-    addDeck(newDeck)
+    addDeck(this.state.title)
     this.setState({ title: '' })
     navigation.navigate('DeckList')   
   }
@@ -73,9 +70,18 @@ class NewDeck extends Component {
           autoCapitalize="words"
         />
 
-        <SubmitBtn
+        {/* <SubmitBtn
           style={styles.submitBtnText}
           onPress={this.submitDeck}
+
+        /> */}
+
+        <Button
+          onPress={this.submitDeck}
+          title="Add Deck"
+          color="#841584"
+          accessibilityLabel="Create a new deck"
+          disabled={!this.state.title ? true : false }
         />
 
         <Text>
@@ -125,7 +131,7 @@ const styles = StyleSheet.create({
 
 
 const mapDispatchToProps = dispatch => ({
-  addDeck: (deck) => dispatch(addDeck(deck)),
+  addDeck: (deck) => dispatch(addDeck(deck))
 })
 
 export default connect(null, mapDispatchToProps)(NewDeck)

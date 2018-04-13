@@ -1,6 +1,5 @@
 import {
-  RECEIVE_DECKS,
-  ADD_DECK
+  ADD_DECK,
 } from '../actions/types'
 
 const initState = {
@@ -72,18 +71,18 @@ const initState = {
   },
 }
 
-export const decks = (state = initState, action) => {
+export const decks = (state = {}, action) => {
 
   switch (action.type) {
-    case RECEIVE_DECKS:
-      return {
-        ...state,
-        ...action.decks,
-      }
     case ADD_DECK:
       return {
         ...state,
-        ...action.deck
+        decks: {
+          ...state.decks,
+          [action.title]: {
+            title: action.title
+          }
+        }
       }
     default:
       return state
