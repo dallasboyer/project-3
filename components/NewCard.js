@@ -1,14 +1,17 @@
 import React, { Component } from 'react'
 
+import { connect } from 'react-redux'
+
 import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity,
+  // TouchableOpacity,
   Platform,
   TextInput,
   AsyncStorage,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  Button
 } from 'react-native'
 
 import {
@@ -16,20 +19,24 @@ import {
   white,
 } from '../utils/colors'
 
-const SubmitBtn = ({ onPress }) => {
-  return (
-    <TouchableOpacity
-      style={
-        Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.AndroidSubmitBtn
-      }
-      onPress={onPress}
-    >
-      <Text style={styles.submitBtnText}>
-        SUBMIT
-      </Text>
-    </TouchableOpacity>
-  )
-}
+import {
+  addCard
+} from '../actions/decks'
+
+// const SubmitBtn = ({ onPress }) => {
+//   return (
+//     <TouchableOpacity
+//       style={
+//         Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.AndroidSubmitBtn
+//       }
+//       onPress={onPress}
+//     >
+//       <Text style={styles.submitBtnText}>
+//         SUBMIT
+//       </Text>
+//     </TouchableOpacity>
+//   )
+// }
 
 class NewCard extends Component {
   state = {
@@ -37,13 +44,6 @@ class NewCard extends Component {
     answer: '',
   }
 
-  // // NOTE for reference only
-  // static navigationOptions = ({ navigation }) => {
-  //   const { deck } = navigation.state.params
-  //   return {
-  //     title: `Add a new card`
-  //   }
-  // }
   static navigationOptions = () => {
     return {
       title: `Add a new card`
@@ -51,11 +51,19 @@ class NewCard extends Component {
   }
 
   submitDeck = () => {
-    console.log(`Submitted a new card that asks: ${this.state.question}, whos answer is: ${this.state.answer}`)
-    this.setState({ 
+    const card = {
+      question: this.state.question,
+      answer: this.state.answer
+    }
+
+    this.props.addCard(this.props.navigation.state.params.deck.title, card)
+
+    this.setState({
       question: '',
       answer: '',
     })
+    
+    navigation.goBack()
   }
 
   render() {
@@ -85,9 +93,17 @@ class NewCard extends Component {
           />
         </View>
 
-        <SubmitBtn
+        {/* <SubmitBtn
           style={styles.submitBtnText}
           onPress={this.submitDeck}
+        /> */}
+
+        <Button
+          onPress={this.submitDeck}
+          title="Add Card"
+          color="#841584"
+          accessibilityLabel="Create a new card"
+          disabled={!this.state.question || !this.state.answer ? true : false}
         />
 
         {/* <View>
@@ -140,4 +156,8 @@ const styles = StyleSheet.create({
   },
 })
 
-export default NewCard
+const mapDispatchToProps = dispatch => ({
+  addCard: (title, card) => dispatch(addCard(title, card))
+})
+
+export default connect(null, mapDispatchToProps)(NewCard)

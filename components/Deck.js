@@ -20,12 +20,15 @@ class Deck extends Component {
       <View style={styles.container}>
 
         <View style={styles.deckHeader}>
+
           <Text style={styles.title}>
             {`${this.props.navigation.state.params.deck.title}`}
           </Text>
+
           <Text style={styles.cardCount}>
             {this.props.navigation.state.params.deck.cards && this.props.navigation.state.params.deck.cards.length ? `${this.props.navigation.state.params.deck.cards.length} cards` : `No cards available`}
           </Text>
+
         </View>
 
         <Button
