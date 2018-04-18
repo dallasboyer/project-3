@@ -6,7 +6,8 @@ import {
   View,
   Button,
   Picker,
-  TouchableOpacity
+  TouchableOpacity,
+  // Animated
 } from 'react-native'
 
 class Quiz extends Component {
@@ -17,7 +18,10 @@ class Quiz extends Component {
       selectedAnswer: "",
       score: 0,
       showAnswer: false,
-      cards: props.navigation.state.params.deck.cards
+      cards: props.navigation.state.params.deck.cards,
+      // opacity: new Animated.Value(0),
+      // width: new Animated.Value(0),
+      // height: new Animated.Value(0),
     }
   }
 
@@ -27,15 +31,27 @@ class Quiz extends Component {
       title: `${deck.title} Quiz`
     }
   }
+  // // NOTE for reference of Animated
+  // componentDidMount(){
+  //   const { opacity, width, height } = this.state
+
+  //   Animated.timing(opacity, { toValue: 1, duration: 1000 }).start()
+  //   Animated.spring(width, { toValue: '100%', speed: 5 }).start()
+  //   Animated.spring(height, { toValue: 40, speed: 5 }).start()
+  // }
 
   calcScore = () => {
     // TODO calculate score after final card DONE
   }
 
   render() {
+    // const { opacity, width, height } = this.state
     return (
       <View style={styles.container}>
 
+        {/* Animation Testing */}
+        {/* <Animated.Text style={{ opacity, width, height }}>Animation Test</Animated.Text> */}
+        
         {/* Counter */}
         {this.state.showAnswer
           ? (null)
@@ -158,7 +174,8 @@ const styles = StyleSheet.create({
   },
   counter: {
     alignSelf: 'flex-start',
-    fontSize: 40,
+    fontSize: 20,
+    fontWeight: "bold",
   },
   viewAnswer: {
     fontSize: 20,

@@ -54,9 +54,9 @@ class Deck extends Component {
             (null)  
         }
 
-        <Text>
+        {/* <Text>
           {JSON.stringify(this.props.navigation.state.params.deck)}
-        </Text>
+        </Text> */}
       </View>
     )
   }
