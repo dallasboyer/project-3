@@ -17,6 +17,7 @@ import DeckList from './components/DeckList'
 import NewDeck from './components/NewDeck'
 import Deck from './components/Deck'
 import NewCard from './components/NewCard'
+import Results from './components/Results'
 import Quiz from './components/Quiz'
 
 const Tabs = TabNavigator({
@@ -74,6 +75,15 @@ const MainNavigator = StackNavigator({
   },
   NewCard: {
     screen: NewCard,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: blue,
+      }
+    }
+  },
+  Results: {
+    screen: Results,
     navigationOptions: {
       headerTintColor: white,
       headerStyle: {

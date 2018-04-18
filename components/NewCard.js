@@ -23,6 +23,10 @@ import {
   addCard
 } from '../actions/decks'
 
+import {
+  addCardToDeck
+} from '../utils/API'
+
 // const SubmitBtn = ({ onPress }) => {
 //   return (
 //     <TouchableOpacity
@@ -56,14 +60,18 @@ class NewCard extends Component {
       answer: this.state.answer
     }
 
-    this.props.addCard(this.props.navigation.state.params.deck.title, card)
+    this.props.addCard(this.props.navigation.state.params.deck.title, card) // Add to redux
 
     this.setState({
       question: '',
       answer: '',
-    })
+    }) // clear local state
     
-    navigation.goBack()
+    this.props.navigation.goBack() // redirect to home
+
+    // add to phone storage
+    addCardToDeck(this.props.navigation.state.params.deck.title, card)
+
   }
 
   render() {
@@ -135,7 +143,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'space-evenly',
+    // justifyContent: 'space-evenly',
+    justifyContent: 'space-around',
     alignItems: 'center',
   },
   inputSection: {

@@ -23,6 +23,11 @@ import {
   addDeck,
 } from '../actions/decks'
 
+import {
+  createDeck,
+  // saveDeckTitle
+} from '../utils/API'
+
 const SubmitBtn = ({ onPress }) => {
   return (
     <TouchableOpacity
@@ -40,6 +45,7 @@ const SubmitBtn = ({ onPress }) => {
 
 class NewDeck extends Component {
   state = {
+    ready: false,
     title: '',
   }
 
@@ -48,10 +54,27 @@ class NewDeck extends Component {
       addDeck,
       navigation
     } = this.props
-
+    
+    // Add to redux
     addDeck(this.state.title)
+
+    // clear local state
     this.setState({ title: '' })
-    navigation.navigate('DeckList')   
+
+    
+    // add to phone storage
+    createDeck(this.state.title).then(results => console.log("Create Deck Results", results))
+    
+    // redirect to home
+    navigation.navigate('DeckList')
+    
+    // add to phone storage
+    // saveDeckTitle(this.state.title).then(results => console.log("Create Deck Results", results))
+
+    // TODO clear local notifications then set it
+    // clearLocalNotification()
+    //   .then(setLocalNotification)
+
   }
 
   render() {

@@ -13,7 +13,23 @@ import {
 
 import sortBy from 'sort-by'
 
+import {
+  // getDecks,
+  test_getDecks
+} from '../utils/API'
+
+import {
+  receiveDecks
+} from '../actions/decks'
+
 class DeckList extends Component {
+  componentDidMount(){
+    // getDecks()
+    //   .then(decks => this.props.receiveDecks(decks))
+    test_getDecks()
+      .then(decks => this.props.receiveDecks(decks))
+  }
+
   render() {
 
     const decksInAlphabeticalOrder = this.props.decks && Object.values(this.props.decks).length
@@ -99,4 +115,8 @@ const mapStateToProps = (state, props) => {
   }
 }
 
-export default connect(mapStateToProps, null)(DeckList)
+const mapDispatchToProps = dispatch => ({
+  receiveDecks: (decks) => dispatch(receiveDecks(decks))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(DeckList)

@@ -15,6 +15,10 @@ class Deck extends Component {
     }
   }
 
+  // componentWillReceiveProps(nextProps){
+  //   this.props.navigation.state.params.deck.cards.length !== nextProps.navigation.state.params.deck.cards.length && this.props.navigation.state.params.deck.cards = this.props.navigation.state.params.deck.cards.length + 1;
+  // }
+
   render() {
     return (
       <View style={styles.container}>
