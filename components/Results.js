@@ -7,6 +7,10 @@ import {
   Button
 } from 'react-native'
 
+import {
+  black
+} from '../utils/colors'
+
 class Results extends Component {
   static navigationOptions = ({ navigation }) => {
     const { deck } = navigation.state.params
@@ -19,24 +23,24 @@ class Results extends Component {
     return (
       <View style={styles.container}>
       
-        <View style={styles.pageTitle}>
-          <Text>RESULTS</Text>
-          <Text>{`Grade: ${(this.props.navigation.state.params.metrics.score/this.props.navigation.state.params.metrics.total)*100}`}</Text>
+        <View>
+          <Text style={styles.pageTitle}>RESULTS</Text>
+          <Text>{`Grade: ${this.props.navigation.state.params.metrics.grade}%`}</Text>
         </View>
 
         <View>
-          <Text>{`Your Score: ${this.props.navigation.state.params.metrics.score}`}</Text>
+          <Text>{`Correct: ${this.props.navigation.state.params.metrics.correct}`}</Text>
+          <Text>{`Incorrect: ${this.props.navigation.state.params.metrics.incorrect}`}</Text>
         </View>
 
         <View>
           <Button
-            onPress={() => {
-               this.props.navigation.goBack()
-              }
-            }
+            onPress={() => this.props.navigation.navigate('Quiz', { deck: this.props.navigation.state.params.deck })}
             title="Reset Quiz"
             // color="#841584"
-            accessibilityLabel="Grade your quiz"
+            // style={{ marginBottom: 15}}
+            color={black}
+            accessibilityLabel="Quizing yourself on this deck again"
           />
           
           <Button

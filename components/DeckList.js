@@ -14,8 +14,7 @@ import {
 import sortBy from 'sort-by'
 
 import {
-  // getDecks,
-  test_getDecks
+  getDecks
 } from '../utils/API'
 
 import {
@@ -24,9 +23,7 @@ import {
 
 class DeckList extends Component {
   componentDidMount(){
-    // getDecks()
-    //   .then(decks => this.props.receiveDecks(decks))
-    test_getDecks()
+    getDecks()
       .then(decks => this.props.receiveDecks(decks))
   }
 
@@ -39,6 +36,13 @@ class DeckList extends Component {
         (null)
 
     console.log("REDUX Decks in alphabetical order: ", decksInAlphabeticalOrder)
+
+    let test_today = new Date()
+    test_today.setDate(test_today.getDate())
+    test_today.setHours(7)
+    test_today.setMinutes(40)
+    test_today.setSeconds(0)
+    console.log("FUTURE DATE", test_today)
 
     return (
       <View style={styles.container}>

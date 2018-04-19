@@ -2,7 +2,13 @@ import {
   AsyncStorage,
 } from 'react-native'
 
+import {
+  Permissions,
+  Notifications
+} from 'expo'
+
 export const DECK_KEY = 'project3:decks'
+export const NOTIFICATION_KEY = 'project3:notifications'
 
 const initData = {
   React: {
@@ -75,26 +81,17 @@ export const clearData = () => {
   return AsyncStorage.clear(DECK_KEY);
 }
 
-initialData = () => {
+const initialData = () => {
   AsyncStorage.setItem(DECK_KEY, JSON.stringify(initData))
   return initData
 }
 
 export const getDecks = () => {
   // clearData();
-  return AsyncStorage.getItem(DECK_KEY).then(results => {
-
-    return results === null ? initialData() : JSON.parse(results)
-    
-  })
+  return AsyncStorage.getItem(DECK_KEY).then(formatDeckResults)
 }
 
-export const test_getDecks = () => {
-  // clearData();
-  return AsyncStorage.getItem(DECK_KEY).then(test_formatDeckResults)
-}
-
-export const test_formatDeckResults = (results) => {
+const formatDeckResults = (results) => {
   return results === null ? initialData() : JSON.parse(results)
 }
 
@@ -116,4 +113,60 @@ export const addCardToDeck = (title, card) => {
     let newDeck = decks[title].cards.concat(card)
     AsyncStorage.setItem(DECK_KEY, JSON.stringify(newDeck))
   })
+}
+
+// NOTIFICATIONS SECTION
+export const clearNotifications = () => {
+  return AsyncStorage.removeItem(NOTIFICATION_KEY).then(Notifications.cancelAllScheduledNotificationsAsync())
+}
+
+const createNotification = () => {
+  return {
+    title: "Take your daily Quiz!",
+    body: "Don't forget to take your daily quiz!",
+    ios: {
+      sound: true
+    },
+    android: {
+      sound: true,
+      priority: "high",
+      sticky: false,
+      vibrate: true,
+    }
+  }
+}
+
+export const setNotification = () => {
+  AsyncStorage.getItem(NOTIFICATION_KEY) // get all notifications
+    .then(JSON.parse) // pass returned data into parse()
+    .then((data) => {
+      if (data === null) { // if no notifications exist
+        Permissions.askAsync(Permissions.NOTIFICATIONS) // ask for permissions to set notifications
+          .then(({ status }) => {
+            if (status === 'granted') { // if granted, clear any notification
+              Notifications.cancelAllScheduledNotificationsAsync()
+              
+              // // // GMT 6:49pm = PDT 11:49am
+              // // let test_today = new Date(2018, 3, 18, 18, 52, 0, 0)
+              let test_today = new Date()
+              // test_today.setDate(test_today.getDate() + 1)
+              test_today.setDate(test_today.getDate())
+              test_today.setHours(8)
+              test_today.setMinutes(20)
+              test_today.setSeconds(0)
+
+              Notifications.scheduleLocalNotificationAsync( // set notification
+                createNotification(),
+                {
+                  // time: tomorrow,
+                  time: test_today,
+                  repeat: 'day',
+                }
+              )
+
+              AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true)) // add notification to phone storage
+            }
+          })
+      }
+    })
 }

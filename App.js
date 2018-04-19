@@ -18,7 +18,15 @@ import {
 import MainNavigator from './routes'
 import CustomStatusBar from './components/CustomStatusBar'
 
+import {
+  setNotification
+} from './utils/API'
+
 class App extends Component {
+  componentDidMount(){
+    setNotification()
+  }
+
   render() {
     return (
       <Provider store={store}>
