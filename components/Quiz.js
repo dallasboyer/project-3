@@ -6,7 +6,8 @@ import {
   View,
   Button,
   TouchableOpacity,
-  // Animated
+  // Animated,
+  Alert
 } from 'react-native'
 
 import {
@@ -26,7 +27,7 @@ class Quiz extends Component {
     this.state = {
       index: 0,
       correct: 0,
-      incorrect: 0,
+      // incorrect: 0,
       showAnswer: false,
       cards: props.navigation.state.params.deck.cards,
       // opacity: new Animated.Value(0),
@@ -51,13 +52,13 @@ class Quiz extends Component {
   //   Animated.spring(height, { toValue: 40, speed: 5 }).start()
   // }
 
-  componentWillUnmount(){
-    this.setState({
-      index: 0,
-      correct: 0,
-      incorrect: 0,
-    })
-  }
+  // componentWillUnmount(){
+  //   this.setState({
+  //     index: 0,
+  //     correct: 0,
+  //     // incorrect: 0,
+  //   })
+  // }
 
   calcScore = () => {
     let grade = (this.state.correct/this.state.cards.length) * 100
@@ -101,103 +102,137 @@ class Quiz extends Component {
             </TouchableOpacity>)
         }
 
-        {/* Correct/Incorrect Buttons */}
+        {/* Correct Button */}
         {this.state.showAnswer
           ? (null)
-          : (<View>
-            <Button
-              onPress={() => {
-                if (this.state.index + 1 === this.state.cards.length){ // if last card
+          : (<Button
+            onPress={() => {
+              if (this.state.index + 1 === this.state.cards.length) { // if last card
 
-                  this.setState((prevState) => ({
-                    correct: prevState.correct + 1,
-                  }))
+                this.setState((prevState) => ({
+                  correct: prevState.correct + 1,
+                }))
 
-                  clearNotifications()
-                    .then(setNotification)
+                clearNotifications()
+                  .then(setNotification)
 
-                  const grade = this.calcScore()
+                const grade = this.calcScore()
 
-                  this.props.navigation.navigate(
-                    'Results',
+                // this.props.navigation.navigate(
+                //   'Results',
+                //   {
+                //     deck: this.props.navigation.state.params.deck,
+                //     metrics: {
+                //       correct: this.state.correct,
+                //       // incorrect: this.state.incorrect,
+                //       total: this.state.cards.length,
+                //       grade: grade
+                //     }
+                //   })
+                console.log("Correct: ", this.state.correct)
+                console.log("Total: ", this.state.cards.length)
+                Alert.alert(
+                  `Your Grade: ${Math.round((this.state.correct / this.state.cards.length) * 100)}%`,
+                  `You got ${this.state.correct} correct out of ${this.state.cards.length}. Try Again?`,
+                  [
+                    // { text: 'Ask me later', onPress: () => console.log('Ask me later pressed') },
+                    { text: 'Reset Quiz', onPress: () => this.setState({
+                      index: 0,
+                      correct: 0,
+                      showAnswer: false
+                    }) },
                     {
-                      deck: this.props.navigation.state.params.deck,
-                      metrics: {
-                        correct: this.state.correct,
-                        incorrect: this.state.incorrect,
-                        total: this.state.cards.length,
-                        grade: grade
-                      }
-                    })
+                      text: 'Back to Deck', onPress: () => this.props.navigation.navigate(
+                        'Deck',
+                        { deck: this.props.navigation.state.params.deck }
+                      ), style: 'cancel' },
+                  ],
+                  { cancelable: false }
+                )
 
-                  // this.setState({
-                  //   index: 0,
-                  //   correct: 0,
-                  //   incorrect: 0,
-                  // })
+              } else { // if not last card
 
-                } else { // if not last card
+                this.setState((prevState) => ({
+                  index: prevState.index + 1,
+                  correct: prevState.correct + 1,
+                }))
 
-                  this.setState((prevState) => ({
-                    index: prevState.index + 1,
-                    correct: prevState.correct + 1,
-                  }))
+              }
 
-                }
-
-              }}
-              title="Correct"
-              color={green}
-              accessibilityLabel="Mark, correct, because you know the answer"
-            />
-            <Button
-              onPress={() => {
-                if (this.state.index + 1 === this.state.cards.length){ 
-
-                  this.setState((prevState) => ({
-                    incorrect: prevState.incorrect + 1,
-                  }))
-
-                  clearNotifications()
-                    .then(setNotification)
-
-                  const grade = this.calcScore()
-
-                  this.props.navigation.navigate(
-                    'Results',
-                    { 
-                      deck: this.props.navigation.state.params.deck,
-                      metrics: {
-                        correct: this.state.correct,
-                        incorrect: this.state.incorrect,
-                        total: this.state.cards.length,
-                        grade: grade
-                      }
-                    })
-
-                  // this.setState({
-                  //   index: 0,
-                  //   correct: 0,
-                  //   incorrect: 0,
-                  // })
-
-                } else {
-
-                  this.setState((prevState) => ({
-                    index: prevState.index + 1,
-                    incorrect: prevState.incorrect + 1,
-                  }))
-
-                }
-
-              }}
-              title="Incorrect"
-              color={red}
-              accessibilityLabel="Mark, incorrect, because you do not know the answer"
-            />
-          </View>)
+            }}
+            title="Correct"
+            color={green}
+            accessibilityLabel="Mark, correct, because you know the answer"
+          />)
         }
-        
+
+        {/* Incorrect Button */}
+        {this.state.showAnswer
+          ? (null)
+          : (<Button
+            onPress={() => {
+              if (this.state.index + 1 === this.state.cards.length) { // if last card
+
+                // this.setState((prevState) => ({
+                //   incorrect: prevState.incorrect + 1,
+                // }))
+
+                clearNotifications()
+                  .then(setNotification)
+
+                const grade = this.calcScore()
+
+                // this.props.navigation.navigate(
+                //   'Results',
+                //   {
+                //     deck: this.props.navigation.state.params.deck,
+                //     metrics: {
+                //       correct: this.state.correct,
+                //       // incorrect: this.state.incorrect,
+                //       total: this.state.cards.length,
+                //       grade: grade
+                //     }
+                //   })
+                console.log("Correct: ", this.state.correct)
+                console.log("Total: ", this.state.cards.length)
+                Alert.alert(
+                  `Your Grade: ${Math.round((this.state.correct / this.state.cards.length) * 100)}%`,
+                  `You got ${this.state.correct} correct out of ${this.state.cards.length}. Try Again?`,
+                  [
+                    // { text: 'Ask me later', onPress: () => console.log('Ask me later pressed') },
+                    {
+                      text: 'Reset Quiz', onPress: () => this.setState({
+                        index: 0,
+                        correct: 0,
+                        showAnswer: false
+                      })
+                    },
+                    {
+                      text: 'Back to Deck', onPress: () => this.props.navigation.navigate(
+                        'Deck',
+                        { deck: this.props.navigation.state.params.deck }
+                      ), style: 'cancel'
+                    },
+                  ],
+                  { cancelable: false }
+                )
+
+              } else {
+
+                this.setState((prevState) => ({
+                  index: prevState.index + 1,
+                  // incorrect: prevState.incorrect + 1,
+                }))
+
+              }
+
+            }}
+            title="Incorrect"
+            color={red}
+            accessibilityLabel="Mark, incorrect, because you do not know the answer"
+          />)
+        }
+
       </View>
     );
   }

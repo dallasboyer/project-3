@@ -6,10 +6,7 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity,
-  Platform,
   TextInput,
-  AsyncStorage,
   KeyboardAvoidingView,
   Button
 } from 'react-native'
@@ -20,28 +17,12 @@ import {
 } from '../utils/colors'
 
 import {
-  addDeck,
+  addDeck
 } from '../actions/decks'
 
 import {
-  createDeck,
-  // saveDeckTitle
+  saveDeckTitle
 } from '../utils/API'
-
-const SubmitBtn = ({ onPress }) => {
-  return (
-    <TouchableOpacity
-      style={
-        Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.AndroidSubmitBtn
-      }
-      onPress={onPress}
-    >
-      <Text style={styles.submitBtnText}>
-        Add Deck
-      </Text>
-    </TouchableOpacity>
-  )
-}
 
 class NewDeck extends Component {
   state = {
@@ -57,23 +38,15 @@ class NewDeck extends Component {
     
     // Add to redux
     addDeck(this.state.title)
-
+    
+    // add to phone storage
+    saveDeckTitle(this.state.title)
+    
     // clear local state
     this.setState({ title: '' })
 
-    
-    // add to phone storage
-    createDeck(this.state.title).then(results => console.log("Create Deck Results", results))
-    
     // redirect to home
     navigation.navigate('DeckList')
-    
-    // add to phone storage
-    // saveDeckTitle(this.state.title).then(results => console.log("Create Deck Results", results))
-
-    // TODO clear local notifications then set it
-    // clearLocalNotification()
-    //   .then(setLocalNotification)
 
   }
 
@@ -93,12 +66,6 @@ class NewDeck extends Component {
           autoCapitalize="words"
         />
 
-        {/* <SubmitBtn
-          style={styles.submitBtnText}
-          onPress={this.submitDeck}
-
-        /> */}
-
         <Button
           onPress={this.submitDeck}
           title="Add Deck"
@@ -107,9 +74,6 @@ class NewDeck extends Component {
           disabled={!this.state.title ? true : false }
         />
 
-        <Text>
-          {!this.state.title ? 'No Title' : this.state.title}
-        </Text>
       </KeyboardAvoidingView>
     );
   }

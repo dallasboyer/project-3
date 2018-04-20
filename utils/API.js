@@ -96,23 +96,31 @@ const formatDeckResults = (results) => {
 }
 
 export const saveDeckTitle = (title) => {
-  return AsyncStorage.mergeItem(DECK_KEY, JSON.stringify(title));
-}
-
-export const createDeck = (title) => {
-  return AsyncStorage.setItem(DECK_KEY, JSON.stringify({
+  return AsyncStorage.mergeItem(DECK_KEY, JSON.stringify({
     [title]: { title: title }
-  }))
+  }));
 }
 
 export const addCardToDeck = (title, card) => {
   return AsyncStorage.getItem(DECK_KEY)
-  .then((results) => {
-    const decks = JSON.parse(results)
-    // let newDeck = decks[title].cards.push(card)
-    let newDeck = decks[title].cards.concat(card)
-    AsyncStorage.setItem(DECK_KEY, JSON.stringify(newDeck))
-  })
+    .then((results) => {
+      let decks = JSON.parse(results)
+      
+      decks[title].cards
+        ? decks[title].cards.push(card)
+        : decks[title] = {
+          title: title,
+          cards: decks[title].cards && decks[title].cards.length
+            ?
+            decks[title].cards.concat(card)
+            :
+            [card]
+          }
+
+      console.log("from API, New Deck = ", decks[title])
+
+      AsyncStorage.setItem(DECK_KEY, JSON.stringify(decks))
+    })
 }
 
 // NOTIFICATIONS SECTION
@@ -147,19 +155,19 @@ export const setNotification = () => {
               Notifications.cancelAllScheduledNotificationsAsync()
               
               // // // GMT 6:49pm = PDT 11:49am
-              // // let test_today = new Date(2018, 3, 18, 18, 52, 0, 0)
-              let test_today = new Date()
-              // test_today.setDate(test_today.getDate() + 1)
-              test_today.setDate(test_today.getDate())
-              test_today.setHours(8)
-              test_today.setMinutes(20)
-              test_today.setSeconds(0)
+              // // let tomorrow = new Date(2018, 3, 18, 18, 52, 0, 0)
+              let tomorrow = new Date()
+              tomorrow.setDate(tomorrow.getDate() + 1)
+              // tomorrow.setDate(tomorrow.getDate())
+              tomorrow.setHours(8)
+              tomorrow.setMinutes(0)
+              tomorrow.setSeconds(0)
 
               Notifications.scheduleLocalNotificationAsync( // set notification
                 createNotification(),
                 {
                   // time: tomorrow,
-                  time: test_today,
+                  time: tomorrow,
                   repeat: 'day',
                 }
               )

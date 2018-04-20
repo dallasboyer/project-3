@@ -8,23 +8,24 @@ import {
   StyleSheet,
   FlatList,
   TouchableOpacity,
-  Button
+  Button,
+  ActivityIndicator
 } from 'react-native'
 
 import sortBy from 'sort-by'
 
 import {
   getDecks
-} from '../utils/API'
-
-import {
-  receiveDecks
 } from '../actions/decks'
 
 class DeckList extends Component {
+  state = {
+    isAppReady: false
+  }
+
   componentDidMount(){
-    getDecks()
-      .then(decks => this.props.receiveDecks(decks))
+    this.props.getDecks()
+      .then(() => this.setState({ isAppReady: true }))
   }
 
   render() {
@@ -37,34 +38,27 @@ class DeckList extends Component {
 
     console.log("REDUX Decks in alphabetical order: ", decksInAlphabeticalOrder)
 
-    let test_today = new Date()
-    test_today.setDate(test_today.getDate())
-    test_today.setHours(7)
-    test_today.setMinutes(40)
-    test_today.setSeconds(0)
-    console.log("FUTURE DATE", test_today)
-
-    return (
-      <View style={styles.container}>
+    if(this.state.isAppReady){
+      return (<View style={styles.container}>
         <Text style={styles.pageTitle}>All Decks</Text>
 
         {decksInAlphabeticalOrder && decksInAlphabeticalOrder.length
           ?
-            (<FlatList
-              data={decksInAlphabeticalOrder}
-              renderItem={({ item }) => (
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('Deck', { deck: item })}>
-                  <View style={styles.deckHeader} key={item.title}>
-                    <Text style={styles.title}>
-                      {`${item.title}`}
-                    </Text>
-                    <Text style={styles.cardCount}>
-                      {item.cards && item.cards.length ? `${item.cards.length} cards` : `No cards available`}
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-              )}
-            />)
+          (<FlatList
+            data={decksInAlphabeticalOrder}
+            renderItem={({ item }) => (
+              <TouchableOpacity onPress={() => this.props.navigation.navigate('Deck', { deck: item })}>
+                <View style={styles.deckHeader} key={item.title}>
+                  <Text style={styles.title}>
+                    {`${item.title}`}
+                  </Text>
+                  <Text style={styles.cardCount}>
+                    {item.cards && item.cards.length ? `${item.cards.length} cards` : `No cards available`}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            )}
+          />)
           :
           (<View>
             <Text>No Decks are available, create one:</Text>
@@ -75,10 +69,13 @@ class DeckList extends Component {
               accessibilityLabel="Create a new Deck"
             />
           </View>)
-      }
-        
-      </View>
-    )
+        }
+
+      </View>)
+    } else {
+      return (<ActivityIndicator size="large" color="#0000ff" />)
+    }
+
   }
 }
 
@@ -120,7 +117,7 @@ const mapStateToProps = (state, props) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  receiveDecks: (decks) => dispatch(receiveDecks(decks))
+  getDecks: () => dispatch(getDecks())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(DeckList)

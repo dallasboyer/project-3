@@ -7,9 +7,8 @@ import {
   Text,
   View,
   // TouchableOpacity,
-  Platform,
+  // Platform,
   TextInput,
-  AsyncStorage,
   KeyboardAvoidingView,
   Button
 } from 'react-native'
@@ -60,17 +59,15 @@ class NewCard extends Component {
       answer: this.state.answer
     }
 
-    this.props.addCard(this.props.navigation.state.params.deck.title, card) // Add to redux
+    addCardToDeck(this.props.navigation.state.params.deck.title, card)
+      .then(() => this.props.addCard(this.props.navigation.state.params.deck.title, card))
 
     this.setState({
       question: '',
       answer: '',
-    }) // clear local state
+    })
     
     this.props.navigation.goBack() // redirect to home
-
-    // add to phone storage
-    addCardToDeck(this.props.navigation.state.params.deck.title, card)
 
   }
 

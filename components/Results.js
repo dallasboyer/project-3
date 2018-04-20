@@ -25,36 +25,37 @@ class Results extends Component {
       
         <View>
           <Text style={styles.pageTitle}>RESULTS</Text>
-          <Text>{`Grade: ${this.props.navigation.state.params.metrics.grade}%`}</Text>
         </View>
 
         <View>
+          <Text>{`Grade: ${this.props.navigation.state.params.metrics.grade}%`}</Text>          
           <Text>{`Correct: ${this.props.navigation.state.params.metrics.correct}`}</Text>
-          <Text>{`Incorrect: ${this.props.navigation.state.params.metrics.incorrect}`}</Text>
         </View>
 
-        <View>
-          <Button
-            onPress={() => this.props.navigation.navigate('Quiz', { deck: this.props.navigation.state.params.deck })}
-            title="Reset Quiz"
-            // color="#841584"
-            // style={{ marginBottom: 15}}
-            color={black}
-            accessibilityLabel="Quizing yourself on this deck again"
-          />
-          
-          <Button
-            onPress={() => {
+        <Button
+          onPress={() => {
+            this.props.navigation.navigate(
+              'Quiz',
+              { deck: this.props.navigation.state.params.deck }
+            )
+          }}
+          title="Reset Quiz"
+          // color="#841584"
+          color={black}
+          accessibilityLabel="Quizing yourself on this deck again"
+        />
 
-              this.props.navigation.navigate('Deck', { deck: this.props.navigation.state.params.deck })
-            }}
-
-
-            title="Back to Deck"
-            // color="#841584"
-            accessibilityLabel="Return to deck"
-          />
-        </View>
+        <Button
+          onPress={() => {
+            this.props.navigation.navigate(
+              'Deck',
+              { deck: this.props.navigation.state.params.deck }
+            )
+          }}
+          title="Back to Deck"
+          // color="#841584"
+          accessibilityLabel="Return to deck"
+        />
 
       </View>
     );
