@@ -42,12 +42,11 @@ class NewDeck extends Component {
     // add to phone storage
     saveDeckTitle(this.state.title)
     
+    // redirect to home
+    navigation.navigate('Deck', {title: this.state.title})
+
     // clear local state
     this.setState({ title: '' })
-
-    // redirect to home
-    navigation.navigate('DeckList')
-
   }
 
   render() {

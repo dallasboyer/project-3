@@ -20,17 +20,17 @@ import {
 class Deck extends Component {
   static navigationOptions = ({ navigation }) => {
     const {
-      deck
+      title
     } = navigation.state.params
 
     return {
-      title: `${deck.title} Deck`,
+      title: `${title} Deck`,
       headerLeft: <HeaderBackButton tintColor={white} onPress={() => navigation.navigate('DeckList')} />
     }
   }
 
   render() {
-    console.log("DECK TITLE: ", this.props.navigation.state.params.deck.title)
+    console.log("TITLE: ", this.props.navigation.state.params.title)
 
     return (
       <View style={styles.container}>
@@ -101,10 +101,10 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state, { navigation }) => {
-  const { deck } = navigation.state.params
+  const { title } = navigation.state.params
 
   return {
-    deck: state.decks.decks[deck.title]
+    deck: state.decks.decks[title]
   }
 }
 
