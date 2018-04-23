@@ -19,23 +19,9 @@ export const addCard = (title, card) => ({
   card
 })
 
-export const test_addDeck = title => ({
-  type: TEST_ADD_DECK,
-  title
-})
 export const saveDeckTitle = title => dispatch => {
-
-  // post = {
-  //   ...post,
-  //   id: Helpers.createObjectId(),
-  //   timestamp: Date.now()
-  // }
-
-  // TODO set up new deck here, then pass it in
-  // return API.createDeck(title)
-  //   .then(title => dispatch(test_addDeck(title)))
   return API.saveDeckTitle(title)
-    .then(title => dispatch(test_addDeck(title)))
+    .then(title => dispatch(addDeck(title)))
 }
 
 export const getDecksRequest = () => ({

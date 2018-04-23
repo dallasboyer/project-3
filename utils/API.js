@@ -162,12 +162,11 @@ export const setNotification = () => {
           .then(({ status }) => {
             if (status === 'granted') { // if granted, clear any notification
               Notifications.cancelAllScheduledNotificationsAsync()
-              
-              // // // GMT 6:49pm = PDT 11:49am
-              // // let tomorrow = new Date(2018, 3, 18, 18, 52, 0, 0)
+
+              // let tomorrow = new Date(2018, 3, 18, 18, 52, 0, 0)
+              // OR
               let tomorrow = new Date()
               tomorrow.setDate(tomorrow.getDate() + 1)
-              // tomorrow.setDate(tomorrow.getDate())
               tomorrow.setHours(8)
               tomorrow.setMinutes(0)
               tomorrow.setSeconds(0)
@@ -175,7 +174,6 @@ export const setNotification = () => {
               Notifications.scheduleLocalNotificationAsync( // set notification
                 createNotification(),
                 {
-                  // time: tomorrow,
                   time: tomorrow,
                   repeat: 'day',
                 }

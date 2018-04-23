@@ -26,21 +26,6 @@ import {
   addCardToDeck
 } from '../utils/API'
 
-// const SubmitBtn = ({ onPress }) => {
-//   return (
-//     <TouchableOpacity
-//       style={
-//         Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.AndroidSubmitBtn
-//       }
-//       onPress={onPress}
-//     >
-//       <Text style={styles.submitBtnText}>
-//         SUBMIT
-//       </Text>
-//     </TouchableOpacity>
-//   )
-// }
-
 class NewCard extends Component {
   state = {
     question: '',

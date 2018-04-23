@@ -11,10 +11,6 @@ import {
   blue
 } from './utils/colors'
 
-// NOTE example usage of Dimensions API
-// import { Dimensions } from 'react-native';
-// const { width, height } = Dimensions.get('window');
-
 import MainNavigator from './routes'
 import CustomStatusBar from './components/CustomStatusBar'
 
