@@ -9,6 +9,14 @@ import {
   Button
 } from 'react-native'
 
+import {
+  HeaderBackButton
+} from 'react-navigation'
+
+import {
+  white
+} from '../utils/colors'
+
 class Deck extends Component {
   static navigationOptions = ({ navigation }) => {
     const {
@@ -16,7 +24,8 @@ class Deck extends Component {
     } = navigation.state.params
 
     return {
-      title: `${deck.title} Deck`
+      title: `${deck.title} Deck`,
+      headerLeft: <HeaderBackButton tintColor={white} onPress={() => navigation.navigate('DeckList')} />
     }
   }
 
