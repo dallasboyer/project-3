@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import { connect } from 'react-redux'
+
 import {
   Text,
   View,
@@ -9,43 +11,42 @@ import {
 
 class Deck extends Component {
   static navigationOptions = ({ navigation }) => {
-    const { deck } = navigation.state.params
+    const {
+      deck
+    } = navigation.state.params
+
     return {
       title: `${deck.title} Deck`
     }
   }
 
-  // componentWillReceiveProps(nextProps){
-  //   this.props.navigation.state.params.deck.cards.length !== nextProps.navigation.state.params.deck.cards.length && this.props.navigation.state.params.deck.cards = this.props.navigation.state.params.deck.cards.length + 1;
-  // }
-
   render() {
+    console.log("DECK TITLE: ", this.props.navigation.state.params.deck.title)
+
     return (
       <View style={styles.container}>
 
         <View style={styles.deckHeader}>
-
           <Text style={styles.title}>
-            {`${this.props.navigation.state.params.deck.title}`}
+            {`${this.props.deck.title}`}
           </Text>
 
           <Text style={styles.cardCount}>
-            {this.props.navigation.state.params.deck.cards && this.props.navigation.state.params.deck.cards.length ? `${this.props.navigation.state.params.deck.cards.length} cards` : `No cards available`}
+            {this.props.deck.cards && this.props.deck.cards.length ? `${this.props.deck.cards.length} cards` : `No cards available`}
           </Text>
-
         </View>
 
         <Button
-          onPress={() => this.props.navigation.navigate('NewCard', { deck: this.props.navigation.state.params.deck })}
+          onPress={() => this.props.navigation.navigate('NewCard', { deck: this.props.deck })}
           title="Add Card"
           // color="#841584"
           accessibilityLabel="Add a new card to this deck"
         />
 
-        {this.props.navigation.state.params.deck.cards && this.props.navigation.state.params.deck.cards.length
+        {this.props.deck.cards && this.props.deck.cards.length
           ? 
             (<Button
-              onPress={() => this.props.navigation.navigate('Quiz', { deck: this.props.navigation.state.params.deck })}
+              onPress={() => this.props.navigation.navigate('Quiz', { deck: this.props.deck })}
               title="Start Quiz"
               color="#841584"
               accessibilityLabel="Start quizing yourself on this deck"
@@ -90,4 +91,12 @@ const styles = StyleSheet.create({
   },
 })
 
-export default Deck
+const mapStateToProps = (state, { navigation }) => {
+  const { deck } = navigation.state.params
+
+  return {
+    deck: state.decks.decks[deck.title]
+  }
+}
+
+export default connect(mapStateToProps, null)(Deck)

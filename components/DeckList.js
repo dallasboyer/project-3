@@ -47,7 +47,12 @@ class DeckList extends Component {
           (<FlatList
             data={decksInAlphabeticalOrder}
             renderItem={({ item }) => (
-              <TouchableOpacity onPress={() => this.props.navigation.navigate('Deck', { deck: item })}>
+              <TouchableOpacity onPress={() => 
+                this.props.navigation.navigate(
+                  'Deck',
+                  {deck: item}
+                )
+              }>
                 <View style={styles.deckHeader} key={item.title}>
                   <Text style={styles.title}>
                     {`${item.title}`}

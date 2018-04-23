@@ -86,6 +86,15 @@ const initialData = () => {
   return initData
 }
 
+// // NOTE this works, keep for future reference
+// export const getDeck = (title) => {
+//   return AsyncStorage.getItem(DECK_KEY)
+//     .then((results) => {
+//       const decks = JSON.parse(results)
+//       return decks[title]
+//     })
+// }
+
 export const getDecks = () => {
   // clearData();
   return AsyncStorage.getItem(DECK_KEY).then(formatDeckResults)

@@ -98,11 +98,6 @@ class NewCard extends Component {
           />
         </View>
 
-        {/* <SubmitBtn
-          style={styles.submitBtnText}
-          onPress={this.submitDeck}
-        /> */}
-
         <Button
           onPress={this.submitDeck}
           title="Add Card"
@@ -111,10 +106,6 @@ class NewCard extends Component {
           disabled={!this.state.question || !this.state.answer ? true : false}
         />
 
-        {/* <View>
-          <Text>{!this.state.question ? 'No question' : this.state.question}</Text>
-          <Text>{!this.state.answer ? 'No answer' : this.state.answer}</Text>
-        </View> */}
       </KeyboardAvoidingView>
     );
   }

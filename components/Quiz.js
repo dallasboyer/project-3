@@ -60,8 +60,9 @@ class Quiz extends Component {
   //   })
   // }
 
-  calcScore = () => {
-    let grade = (this.state.correct/this.state.cards.length) * 100
+  calcScore = (correct, total) => {
+    let grade = (correct/total)
+    grade *= 100
     return grade
   }
 
@@ -116,7 +117,7 @@ class Quiz extends Component {
                 clearNotifications()
                   .then(setNotification)
 
-                const grade = this.calcScore()
+                const grade = this.calcScore(this.state.correct, this.state.cards.length)
 
                 // this.props.navigation.navigate(
                 //   'Results',
@@ -180,7 +181,7 @@ class Quiz extends Component {
                 clearNotifications()
                   .then(setNotification)
 
-                const grade = this.calcScore()
+                const grade = this.calcScore(this.state.correct, this.state.cards.length)
 
                 // this.props.navigation.navigate(
                 //   'Results',
@@ -193,8 +194,10 @@ class Quiz extends Component {
                 //       grade: grade
                 //     }
                 //   })
+                
                 console.log("Correct: ", this.state.correct)
                 console.log("Total: ", this.state.cards.length)
+
                 Alert.alert(
                   `Your Grade: ${Math.round((this.state.correct / this.state.cards.length) * 100)}%`,
                   `You got ${this.state.correct} correct out of ${this.state.cards.length}. Try Again?`,
