@@ -8,6 +8,11 @@ import {
 } from 'react-native'
 
 import {
+  HeaderBackButton
+} from 'react-navigation'
+
+import {
+  white,
   black
 } from '../utils/colors'
 
@@ -15,7 +20,8 @@ class Results extends Component {
   static navigationOptions = ({ navigation }) => {
     const { deck } = navigation.state.params
     return {
-      title: `${deck.title} Quiz`
+      title: `${deck.title} Quiz`,
+      headerLeft: <HeaderBackButton tintColor={white} onPress={() => navigation.navigate('Deck', { title: deck.title})} /> 
     }
   }
 
@@ -40,7 +46,6 @@ class Results extends Component {
             )
           }}
           title="Reset Quiz"
-          // color="#841584"
           color={black}
           accessibilityLabel="Quizing yourself on this deck again"
         />
@@ -49,11 +54,10 @@ class Results extends Component {
           onPress={() => {
             this.props.navigation.navigate(
               'Deck',
-              { deck: this.props.navigation.state.params.deck }
+              { title: this.props.navigation.state.params.deck.title }
             )
           }}
           title="Back to Deck"
-          // color="#841584"
           accessibilityLabel="Return to deck"
         />
 

@@ -51,13 +51,13 @@ class Quiz extends Component {
   //   Animated.spring(height, { toValue: 40, speed: 5 }).start()
   // }
 
-  // componentWillUnmount(){
-  //   this.setState({
-  //     index: 0,
-  //     correct: 0,
-  //     // incorrect: 0,
-  //   })
-  // }
+  componentWillUnmount(){
+    this.setState({
+      index: 0,
+      correct: 0,
+      showAnswer: false,
+    })
+  }
 
   calcScore = (correct, total) => {
     let grade = (correct/total)
@@ -118,37 +118,16 @@ class Quiz extends Component {
 
                 const grade = this.calcScore(this.state.correct, this.state.cards.length)
 
-                // this.props.navigation.navigate(
-                //   'Results',
-                //   {
-                //     deck: this.props.navigation.state.params.deck,
-                //     metrics: {
-                //       correct: this.state.correct,
-                //       // incorrect: this.state.incorrect,
-                //       total: this.state.cards.length,
-                //       grade: grade
-                //     }
-                //   })
-                console.log("Correct: ", this.state.correct)
-                console.log("Total: ", this.state.cards.length)
-                Alert.alert(
-                  `Your Grade: ${Math.round((this.state.correct / this.state.cards.length) * 100)}%`,
-                  `You got ${this.state.correct} correct out of ${this.state.cards.length}. Try Again?`,
-                  [
-                    // { text: 'Ask me later', onPress: () => console.log('Ask me later pressed') },
-                    { text: 'Reset Quiz', onPress: () => this.setState({
-                      index: 0,
-                      correct: 0,
-                      showAnswer: false
-                    }) },
-                    {
-                      text: 'Back to Deck', onPress: () => this.props.navigation.navigate(
-                        'Deck',
-                        {title: this.props.navigation.state.params.deck.title}
-                      ), style: 'cancel' },
-                  ],
-                  { cancelable: false }
-                )
+                this.props.navigation.navigate(
+                  'Results',
+                  {
+                    deck: this.props.navigation.state.params.deck,
+                    metrics: {
+                      correct: this.state.correct,
+                      total: this.state.cards.length,
+                      grade: grade
+                    }
+                  })
 
               } else { // if not last card
 
@@ -178,41 +157,16 @@ class Quiz extends Component {
 
                 const grade = this.calcScore(this.state.correct, this.state.cards.length)
 
-                // this.props.navigation.navigate(
-                //   'Results',
-                //   {
-                //     deck: this.props.navigation.state.params.deck,
-                //     metrics: {
-                //       correct: this.state.correct,
-                //       // incorrect: this.state.incorrect,
-                //       total: this.state.cards.length,
-                //       grade: grade
-                //     }
-                //   })
-                
-                console.log("Correct: ", this.state.correct)
-                console.log("Total: ", this.state.cards.length)
-
-                Alert.alert(
-                  `Your Grade: ${Math.round((this.state.correct / this.state.cards.length) * 100)}%`,
-                  `You got ${this.state.correct} correct out of ${this.state.cards.length}. Try Again?`,
-                  [
-                    {
-                      text: 'Reset Quiz', onPress: () => this.setState({
-                        index: 0,
-                        correct: 0,
-                        showAnswer: false
-                      })
-                    },
-                    {
-                      text: 'Back to Deck', onPress: () => this.props.navigation.navigate(
-                        'Deck',
-                        {title: this.props.navigation.state.params.deck.title}
-                      ), style: 'cancel'
-                    },
-                  ],
-                  { cancelable: false }
-                )
+                this.props.navigation.navigate(
+                  'Results',
+                  {
+                    deck: this.props.navigation.state.params.deck,
+                    metrics: {
+                      correct: this.state.correct,
+                      total: this.state.cards.length,
+                      grade: grade
+                    }
+                  })
 
               } else {
 
