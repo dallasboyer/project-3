@@ -12,8 +12,7 @@ import {
 } from 'react-native'
 
 import {
-  blue,
-  white,
+  purple
 } from '../utils/colors'
 
 import {
@@ -26,7 +25,6 @@ import {
 
 class NewDeck extends Component {
   state = {
-    ready: false,
     title: '',
   }
 
@@ -55,6 +53,10 @@ class NewDeck extends Component {
 
   render() {
 
+    const {
+      title
+    } = this.state
+
     return (
       <KeyboardAvoidingView style={styles.container}>
         <Text style={styles.pageTitle}>
@@ -65,16 +67,16 @@ class NewDeck extends Component {
           style={styles.input}
           placeholder="Type title of the new deck:"
           onChangeText={(title) => this.setState({ title })}
-          value={this.state.title}
+          value={title}
           autoCapitalize="words"
         />
 
         <Button
           onPress={this.submitDeck}
           title="Add Deck"
-          color="#841584"
+          color={purple}
           accessibilityLabel="Create a new deck"
-          disabled={!this.state.title ? true : false }
+          disabled={!title ? true : false }
         />
 
       </KeyboardAvoidingView>
@@ -84,21 +86,6 @@ class NewDeck extends Component {
 }
 
 const styles = StyleSheet.create({
-  iosSubmitBtn: {
-    backgroundColor: blue,
-    padding: 10,
-    borderRadius: 7,
-    height: 45,
-  },
-  AndroidSubmitBtn: {
-    backgroundColor: blue,
-    padding: 10,
-    height: 45,
-    borderRadius: 2,
-    alignSelf: 'center',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   container: {
     flex: 1,
     flexDirection: 'column',
@@ -112,10 +99,6 @@ const styles = StyleSheet.create({
   input: {
     height: 70,
     width: '100%'
-  },
-  submitBtnText: {
-    color: white,
-    fontSize: 22,
   },
 })
 
