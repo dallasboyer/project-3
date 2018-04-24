@@ -14,7 +14,11 @@ import {
 } from 'react-navigation'
 
 import {
-  white
+  white,
+  red,
+  black,
+  lightgray,
+  purple
 } from '../utils/colors'
 
 class Deck extends Component {
@@ -30,8 +34,6 @@ class Deck extends Component {
   }
 
   render() {
-    console.log("TITLE: ", this.props.navigation.state.params.title)
-
     return (
       <View style={styles.container}>
 
@@ -48,7 +50,6 @@ class Deck extends Component {
         <Button
           onPress={() => this.props.navigation.navigate('NewCard', { deck: this.props.deck })}
           title="Add Card"
-          // color="#841584"
           accessibilityLabel="Add a new card to this deck"
         />
 
@@ -57,7 +58,7 @@ class Deck extends Component {
             (<Button
               onPress={() => this.props.navigation.navigate('Quiz', { deck: this.props.deck })}
               title="Start Quiz"
-              color="#841584"
+              color={purple}
               accessibilityLabel="Start quizing yourself on this deck"
             />)
           :
@@ -84,19 +85,19 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-around',
     alignItems: 'center',
-    backgroundColor: 'lightgray',
+    backgroundColor: lightgray,
     minWidth: '90%',
     maxHeight: 100,
     marginTop: 10,
     marginBottom: 10,
     borderWidth: 3,
-    borderColor: 'black',
+    borderColor: black,
   },
   title: {
     fontSize: 20,
   },
   cardCount: {
-    color: 'red',
+    color: red,
   },
 })
 
