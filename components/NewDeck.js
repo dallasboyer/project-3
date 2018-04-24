@@ -35,15 +35,19 @@ class NewDeck extends Component {
       addDeck,
       navigation
     } = this.props
+
+    const {
+      title
+    } = this.state
     
     // Add to redux
-    addDeck(this.state.title)
+    addDeck(title)
     
     // add to phone storage
-    saveDeckTitle(this.state.title)
+    saveDeckTitle(title)
     
     // redirect to home
-    navigation.navigate('Deck', {title: this.state.title})
+    navigation.navigate('Deck', {title: title})
 
     // clear local state
     this.setState({ title: '' })
