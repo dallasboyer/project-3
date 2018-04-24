@@ -9,7 +9,7 @@ This app was bootstrapped using [create-react-native-app](https://github.com/rea
 
 ## Install the App:
 ```bash
-  yarn
+  yarn install
 ```
 
 ## Start the App:
