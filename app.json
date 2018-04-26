@@ -1,5 +1,20 @@
 {
   "expo": {
-    "sdkVersion": "26.0.0"
+    "sdkVersion": "26.0.0",
+    "orientation": "portrait",
+    "name": "flashcards-by-dallas",
+    "description": "Project 3 from Udacity React Nanodegree using React Native and Redux",
+    "slug": "flashcardsByDallas",
+    "version": "1.0",
+    "icon": "512.png",
+    "notification": {
+      "icon": "42.png"
+    },
+    "ios": {
+      "bundleIdentifier": "org.flashcardsByDallas.exp"
+    },
+    "android": {
+      "package": "org.flashcardsByDallas.exp"
+    }
   }
 }
